@@ -1,0 +1,65 @@
+<!doctype html>
+
+<title>SmartGo</title>
+
+<table>
+  <col width="500px">
+    <tr>
+      <td>
+        <H2 style="margin-top: 0;">SmartGo /// Content Bay</H2>
+      </td>
+    </tr>
+</table>
+
+<hr size="1" width="500px" align="left" color="grey">
+
+<table>
+  <col width="200px">
+  <col width="400px">
+  <col width="100px">
+
+  <tr>
+    <th rowspan="2" col width='50'><H4>Please upload formulation</H4></th>
+    <td>
+        <form method=post enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+        </form>
+    </td>
+
+  </tr>
+</table>
+
+<hr size="1" width="500px" align="left" color="grey">
+
+<table>
+  <tr>
+    <th rowspan="2" col width='200'><H4>Analysis results</H4></th>
+    <td>
+
+        {{review_results}}
+
+    </td>
+  </tr>
+</table>
+
+<hr size="1" width="500px" align="left" color="grey">
+
+<table>
+  <col width="200px">
+  <col width="400px">
+  <col width="100px">
+
+  <tr>
+    <th rowspan="2" col width='50'><H4>Download template</H4></th>
+    <td>
+        <form action="/download_template/" method="post">
+            <button name="template" type="submit">Download Template</button>
+        </form>
+    </td>
+
+  </tr>
+</table>
+
+<hr size="1" width="500px" align="left" color="grey">
+
