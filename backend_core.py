@@ -38,7 +38,7 @@ def upload_file():
 
             return review_results
 
-    return ""
+    return render_template('frontend.html')
 
 @app.route('/download_template/',methods=["POST"])
 def download_template():
