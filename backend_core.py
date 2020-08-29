@@ -7,7 +7,7 @@ from flask import render_template
 import pandas as pd
 
 UPLOAD_FOLDER = './uploads/'
-ALLOWED_EXTENSIONS = {'xlsx'}
+ALLOWED_EXTENSIONS = {'docx'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -32,11 +32,10 @@ def upload_file():
 
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-            review_results = content_review_func(filename)
-
-            return review_results
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], 'temp.docx'))
+            review_results = content_review_func('temp.docx')
+            #review_results = 1
+            return render_template('frontend.html', messages = review_results.split('\n'))
 
     return render_template('frontend.html')
 

@@ -14,7 +14,7 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import jieba
 import jieba.posseg as pseg
-jieba.enable_paddle()
+#jieba.enable_paddle()
 import pickle
 
 def keywords_check_func(content_input,keywords_table,legal_table,brand_name,angle):
@@ -51,9 +51,9 @@ def keywords_check_func(content_input,keywords_table,legal_table,brand_name,angl
 
   legal_results = legal_check_func(content_input,legal_table)
   
-  language_check_recommendations = language_check_func(content_input)
+  #language_check_recommendations = language_check_func(content_input)
 
-  final_recommendation = final_recommendation + '\n'  + legal_results + '\n\n' + language_check_recommendations
+  final_recommendation = final_recommendation + '\n'  + legal_results + '\n'
 
   return df_keywords_filtered,final_recommendation
 
@@ -80,7 +80,7 @@ def content_recommendation_func(df): #used for content generation
         cat_check = df_keywords_filtered_2nd['Check_Status'].prod()
 
         if cat_check == 0:
-          recommendation_str = recommendation_str + '\n\n请将以下【' + keyword_category_ + '】信息补充完整：'
+          recommendation_str = recommendation_str + '\n请将以下【' + keyword_category_ + '】信息补充完整：'
           for word in df_keywords_filtered_2nd[df_keywords_filtered_2nd.Check_Status == 0]['Key_Word'].values:
             recommendation_str = recommendation_str + '\n- ' + str(word)
 
@@ -89,7 +89,7 @@ def content_recommendation_func(df): #used for content generation
         cat_check = df_keywords_filtered_2nd['Check_Status'].sum()
 
         if cat_check == 0:
-          recommendation_str = recommendation_str + '\n\n请将以下【' + keyword_category_ + '】信息中选择任意一项补充：'
+          recommendation_str = recommendation_str + '\n请将以下【' + keyword_category_ + '】信息中选择任意一项补充：'
           for word in df_keywords_filtered_2nd[df_keywords_filtered_2nd.Check_Status == 0]['Key_Word'].values:
             recommendation_str = recommendation_str + ' \n- ' + str(word)
 
@@ -109,9 +109,9 @@ def content_recommendation_func(df): #used for content generation
       pass
 
   if final_results >=1:
-    overall_results_str = '审核结果: 通过\n\n' + overall_results_str
+    overall_results_str = '审核结果: 通过\n' + overall_results_str
   else:
-    overall_results_str = '审核结果: 未通过\n\n' + overall_results_str
+    overall_results_str = '审核结果: 未通过\n' + overall_results_str
     
   if len(recommendation_str) <= 20:
     recommendation_str = ''
@@ -244,7 +244,7 @@ def word_segment_func(text_input):
   text_input = text_input.replace(',',' ')
   text_input = text_input.replace('，',' ')
 
-  seg_list = jieba.cut(text_input, cut_all=False,use_paddle=True)
+  seg_list = jieba.cut(text_input, cut_all=False)
   text_segment = (" ".join(seg_list))
   return text_segment
 
@@ -269,7 +269,7 @@ def language_check_func(text_input):
 #CORE
 def content_review_func(file):
 
-    docx_path = './/outputs//'
+    docx_path = './/uploads//'
     model_folder_path = './/model//'
 
     df_keywords = pd.read_excel(model_folder_path + 'Keywords_DB.xlsx',sheet_name = 'Brands')
@@ -285,18 +285,18 @@ def content_review_func(file):
 
 
     if (pictures_recommendations[-1] != 0) and (pictures_recommendations[-1] != -1):
-        pictures_recommendations = '\n【照片检查】未通过： {} 张图片不符合要求'.format(pictures_recommendations[-1])
+        pictures_recommendations = '【照片检查】未通过： {} 张图片不符合要求'.format(pictures_recommendations[-1])
 
     elif pictures_recommendations[-1] == -1:
-        pictures_recommendations = '\n【照片检查】未检测到照片'
+        pictures_recommendations = '【照片检查】未检测到照片'
 
     else:
-        pictures_recommendations = '\n【照片检查】通过'
+        pictures_recommendations = '【照片检查】通过'
 
 
     brand_str = ''
     for b_ in brand:
         brand_str = brand_str + b_ + ' + '
 
-    return ('文章标题：' + title + '\n内容角度:' + brand_str[:-2] + '\n发布平台:' + platform + '\n\n' + \
+    return ('文章标题：' + title + '\n内容角度:' + brand_str[:-2] + '\n发布平台:' + platform + '\n' + \
               recommendations + '\n' + pictures_recommendations)
