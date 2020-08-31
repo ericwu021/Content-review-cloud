@@ -41,7 +41,7 @@ def upload_file():
 
 @app.route('/download_template/',methods=["POST"])
 def download_template():
-    template_file = 'Keywords_DB.xlsx'
+    template_file = 'Content_collection_template.docx'
     print ('test')
     return send_file('./model/{}'.format(template_file), attachment_filename='{}'.format(template_file),as_attachment=True)
 
