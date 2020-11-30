@@ -1,6 +1,7 @@
 #from imp import reload
 import docx2txt
 import pandas as pd
+import numpy as np
 
 import zipfile
 from PIL import Image
