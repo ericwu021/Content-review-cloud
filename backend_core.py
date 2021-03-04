@@ -42,6 +42,6 @@ def upload_file():
 @app.route('/download_template/',methods=["POST"])
 def download_template():
     template_file = 'Content_collection_template.docx'
-    print ('test')
+    print ('test_20210304')
     return send_file('./model/{}'.format(template_file), attachment_filename='{}'.format(template_file),as_attachment=True)
 
